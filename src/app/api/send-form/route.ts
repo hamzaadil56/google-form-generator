@@ -39,13 +39,17 @@ export async function POST(request: NextRequest) {
 
     const form = forms[forms.length - 1];
 
-    const questionsFromDB = questions.map(async (question) => {
+    const questionsFromDB = questions.map(async (question, index) => {
       let insertQuestion: NewQuestion;
       insertQuestion = { adminEmail: userEmail, ...question, formId: form.id };
       const responses = await db
         .insert(QuestionsTable)
         .values(insertQuestion)
         .returning();
+
+      if (!responses[index]) {
+        throw new Error();
+      }
       return responses;
     });
 
@@ -57,6 +61,7 @@ export async function POST(request: NextRequest) {
       message: "Form created successfully!",
       email: payload.email,
       form,
+      questionsFromDB,
     });
   } catch (error: any) {
     return NextResponse.json({

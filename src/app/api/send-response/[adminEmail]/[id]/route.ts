@@ -30,7 +30,7 @@ export async function POST(
         .insert(ResponsesTable)
         .values(response)
         .returning();
-      if (!responsesFromDB) {
+      if (!responsesFromDB[0]) {
         throw new Error("Internal Server Error");
       }
       return responsesFromDB;

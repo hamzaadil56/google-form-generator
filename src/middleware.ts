@@ -16,6 +16,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   } else {
     const { payload } = await jose.jwtVerify(jwt, secret);
+
     const headers = new Headers(request.headers);
     headers.set("user", JSON.stringify(payload.email));
 

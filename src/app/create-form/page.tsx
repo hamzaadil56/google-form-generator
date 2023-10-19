@@ -4,8 +4,6 @@ import React, { useState, useRef, useEffect } from "react";
 import Input from "@/components/shared/TextInput";
 import "@/app/globals.css";
 
-import Switch from "@mui/material/Switch";
-import { FormControlLabel } from "@mui/material";
 import { Trash2, Copy, X, CheckSquare } from "lucide-react";
 import Loader from "@/components/shared/Loader";
 import { usePathname } from "next/navigation";

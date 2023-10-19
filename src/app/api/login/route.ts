@@ -41,12 +41,14 @@ export const POST = async (request: NextRequest) => {
       const jwt = await new jose.SignJWT({ email })
         .setProtectedHeader({ alg })
         .setIssuedAt()
-        .setExpirationTime(expirationTime)
+        .setExpirationTime("2h")
         .sign(secret);
 
       cookies().set("token", jwt, {
         httpOnly: true,
+        maxAge: 604800,
       });
+      console.log(jwt);
 
       return NextResponse.json({ message: "Logged in  successfully!" });
     }

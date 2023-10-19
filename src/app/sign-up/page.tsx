@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/components/shared/Loader";
 import Link from "next/link";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
@@ -12,6 +13,8 @@ const Signup = () => {
     password: "",
     confirmPassword: "",
   });
+
+  const [isLoading, setIsLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -30,6 +33,7 @@ const Signup = () => {
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const response = await fetch("/api/sign-up", {
         method: "POST",
         body: JSON.stringify(formData),
@@ -42,6 +46,8 @@ const Signup = () => {
       toast.success(`${data.message}`);
     } catch (error: any) {
       toast.error(`${error.message}`);
+    } finally {
+      setIsLoading(false);
     }
 
     // You can add your registration logic here
@@ -111,7 +117,7 @@ const Signup = () => {
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
           >
-            Sign Up
+            {isLoading ? <Loader width="w-4" height="h-4" /> : "Sign Up"}
           </button>
           <div className=" my-2">
             <h3 className="text-sm text-center">
