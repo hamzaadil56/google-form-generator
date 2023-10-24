@@ -41,8 +41,9 @@ export const POST = async (request: NextRequest) => {
       const jwt = await new jose.SignJWT({ email })
         .setProtectedHeader({ alg })
         .setIssuedAt()
-        .setExpirationTime("2h")
+        .setExpirationTime(expirationTime)
         .sign(secret);
+        
 
       cookies().set("token", jwt, {
         httpOnly: true,
